@@ -1,0 +1,17 @@
+{
+    "name": "alairock/lodash",
+    "description": "Normalizaton of php functions",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Skyler Lewis",
+            "email": "sblnog@gmail.com"
+        }
+    ],
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "alairock\\lodash\\": "src/alairock/lodash/"
+        }
+    }
+}
