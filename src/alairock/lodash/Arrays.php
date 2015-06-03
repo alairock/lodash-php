@@ -135,6 +135,16 @@ class Arrays
 	}
 
 	/**
+	 * diffKey
+	 */
+	public function diffUassoc($key_compare_func, ...$arrays)
+	{
+		$arrays[] = $key_compare_func;
+		$this->array = call_user_func_array("array_diff_uassoc", $arrays);
+		return $this;
+	}
+
+	/**
 	 * array_map
 	 */
 	public function array_map(Closure $callback)

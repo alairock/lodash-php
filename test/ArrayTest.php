@@ -106,8 +106,14 @@ class ArrayTest extends \PHPUnit_Framework_TestCase
 	 */
 	public function test_array_diff_uassoc()
 	{
-		$response = $this->array->diffKey(['blue'  => 1, 'red'  => 2, 'green'  => 3, 'purple' => 4], ['green' => 5, 'blue' => 6, 'yellow' => 7, 'cyan'   => 8]);
-		$this->assertSame(['red' => 2, 'purple' => 4], $response->get(), 'Something is not going well');
+		$callback = function($a, $b) {
+			if ($a === $b) {
+				return 0;
+			}
+			return ($a > $b)? 1:-1;
+		};
+		$response = $this->array->diffUassoc($callback, ["a" => "green", "b" => "brown", "c" => "blue", "red"], ["a" => "green", "yellow", "red"]);
+		$this->assertSame(['b' => 'brown', 'c' => 'blue', 0 => 'red'], $response->get(), 'Something is not going well');
 	}
 
 
