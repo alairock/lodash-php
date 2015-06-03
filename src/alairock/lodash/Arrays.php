@@ -253,6 +253,15 @@ class Arrays
 	{
 		return array_key_exists($key, $this->array);
 	}
+
+	/**
+	 * keys
+	 */
+	public function keys()
+	{
+		$this->array = array_keys($this->array);
+		return $this;
+	}
 	/**
 	 * array_map
 	 */

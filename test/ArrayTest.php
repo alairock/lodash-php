@@ -241,6 +241,15 @@ class ArrayTest extends \PHPUnit_Framework_TestCase
 		$this->assertTrue($response);
 	}
 
+	/**
+	 * @test
+	 */
+	public function test_array_keys()
+	{
+		$response = $this->array->from(['brown' => 'green', 'horray'])->keys();
+		$this->assertSame(['brown', 0], $response->get(), 'Something is not going well');
+	}
+
 	public function tearDown()
 	{
 		parent::tearDown();
