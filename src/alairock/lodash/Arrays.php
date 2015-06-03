@@ -218,9 +218,9 @@ class Arrays
 	/**
 	 * filter
 	 */
-	public function filter($callback, $flag = 0)
+	public function filter($callback)
 	{
-		$this->array = array_filter($this->array, $callback, $flag);
+		$this->array = array_filter($this->array, $callback);
 		return $this;
 	}
 	
