@@ -1,3 +1,4 @@
+[<img src="https://travis-ci.org/alairock/lodash-php.svg">](https://travis-ci.org/alairock/lodash-php)
 # lodash
 Normalization of PHP functions, specifically array, but will problem extend to other areas of PHP.
 
