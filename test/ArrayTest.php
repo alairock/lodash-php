@@ -100,7 +100,6 @@ class ArrayTest extends \PHPUnit_Framework_TestCase
 		$this->assertSame(['red' => 2, 'purple' => 4], $response->get(), 'Something is not going well');
 	}
 
-
 	/**
 	 * @test
 	 */
@@ -116,6 +115,131 @@ class ArrayTest extends \PHPUnit_Framework_TestCase
 		$this->assertSame(['b' => 'brown', 'c' => 'blue', 0 => 'red'], $response->get(), 'Something is not going well');
 	}
 
+	/**
+	 * @test
+	 */
+	public function test_array_diff_ukey()
+	{
+		$callback = function($a, $b) {
+			if ($a == $b)
+				return 0;
+			else if ($a > $b)
+				return 1;
+			else
+				return -1;
+		};
+		$response = $this->array->diffUkey($callback, ['blue'  => 1, 'red'  => 2, 'green'  => 3, 'purple' => 4], ['green' => 5, 'blue' => 6, 'yellow' => 7, 'cyan'   => 8]);
+		$this->assertSame(['red' => 2, 'purple' => 4], $response->get(), 'Something is not going well');
+	}
+
+	/**
+	 * @test
+	 */
+	public function test_array_diff()
+	{
+		$response = $this->array->diff(["a" => "green", "red", "blue", "red"], ["b" => "green", "yellow", "red"]);
+		$this->assertSame([1 => "blue"], $response->get(), 'Something is not going well');
+	}
+
+	/**
+	 * @test
+	 */
+	public function test_array_fill_keys()
+	{
+		$response = $this->array->from([1, 'asdf', 234])->fillKeys('banana');
+		$this->assertSame([1 => 'banana', 'asdf' => 'banana', 234 => 'banana'], $response->get(), 'Something is not going well');
+	}
+
+	/**
+	 * @test
+	 */
+	public function test_array_fill()
+	{
+		$response = $this->array->fill(5, 4, 'banana');
+		$this->assertSame([5 => 'banana', 6 => 'banana', 7 => 'banana', 8 => 'banana'], $response->get(), 'Something is not going well');
+	}
+
+	/**
+	 * @test
+	 */
+	public function test_array_filter()
+	{
+		$response = $this->array->from([6, 7, 8, 9, 10, 11, 12])->filter(function($var) {
+			return(!($var & 1));
+		});
+		$this->assertSame([0 => 6, 2 => 8, 4 => 10, 6 => 12], $response->get(), 'Something is not going well');
+	}
+
+	/**
+	 * @test
+	 */
+	public function test_array_flip()
+	{
+		$response = $this->array->from([0 => 6, 2 => 8, 4 => 10, 6 => 12])->flip();
+		$this->assertSame([6 => 0, 8 => 2, 10 => 4, 12 => 6], $response->get(), 'Something is not going well');
+	}
+
+	/**
+	 * @test
+	 */
+	public function test_array_intersect_assoc()
+	{
+		$response = $this->array->intersectAssoc(["a" => "green", "b" => "brown", "c" => "blue", "red"], ["a" => "green", "b" => "yellow", "blue", "red"]);
+		$this->assertSame(["a" => "green"], $response->get(), 'Something is not going well');
+	}
+
+	/**
+	 * @test
+	 */
+	public function test_array_intersect_key()
+	{
+		$response = $this->array->intersectKey(['blue'  => 1, 'red'  => 2, 'green'  => 3, 'purple' => 4], ['green' => 5, 'blue' => 6, 'yellow' => 7, 'cyan'   => 8]);
+		$this->assertSame(["blue" => 1, "green" => 3], $response->get(), 'Something is not going well');
+	}
+
+	/**
+	 * @test
+	 */
+	public function test_array_intersect_uassoc()
+	{
+		$response = $this->array->intersectUassoc("strcasecmp", ["a" => "green", "b" => "brown", "c" => "blue", "red"], ["a" => "GREEN", "B" => "brown", "yellow", "red"]);
+		$this->assertSame(['b' => 'brown'], $response->get(), 'Something is not going well');
+	}
+
+	/**
+	 * @test
+	 */
+	public function test_array_intersect_ukey()
+	{
+		$response = $this->array->intersectUkey(function($key1, $key2)
+		{
+			if ($key1 == $key2)
+				return 0;
+			else if ($key1 > $key2)
+				return 1;
+			else
+				return -1;
+		}, ['blue'  => 1, 'red'  => 2, 'green'  => 3, 'purple' => 4], ['green' => 5, 'blue' => 6, 'yellow' => 7, 'cyan'   => 8]);
+		$this->assertSame(['blue' => 1, 'green' => 3], $response->get(), 'Something is not going well');
+	}
+
+	/**
+	 * @test
+	 */
+	public function test_array_intersect()
+	{
+		$response = $this->array->intersect(["a" => "green", "red", "blue"], ["b" => "green", "yellow", "red"]);
+		$this->assertSame(['a' => 'green', 0 => 'red'], $response->get(), 'Something is not going well');
+	}
+
+	/**
+	 * @test
+	 */
+	public function test_array_key_exists()
+	{
+		$response = $this->array->from(['brown' => 'green', 'horray'])->keyExists('brown');
+		$this->assertTrue($response);
+	}
 
 	public function tearDown()
 	{

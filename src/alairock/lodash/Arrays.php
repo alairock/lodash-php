@@ -135,7 +135,7 @@ class Arrays
 	}
 
 	/**
-	 * diffKey
+	 * diffUassoc
 	 */
 	public function diffUassoc($key_compare_func, ...$arrays)
 	{
@@ -144,6 +144,115 @@ class Arrays
 		return $this;
 	}
 
+	/**
+	 * diffUkey
+	 */
+	public function diffUkey($key_compare_func, ...$arrays)
+	{
+		$arrays[] = $key_compare_func;
+		$this->array = call_user_func_array("array_diff_ukey", $arrays);
+		return $this;
+	}
+
+	/**
+	 * diff
+	 */
+	public function diff(...$arrays)
+	{
+		$this->array = call_user_func_array("array_diff", $arrays);
+		return $this;
+	}
+
+	/**
+	 * fillKeys
+	 */
+	public function fillKeys($value)
+	{
+		$this->array = array_fill_keys($this->array, $value);
+		return $this;
+	}
+
+	/**
+	 * fill
+	 */
+	public function fill($startIndex, $num, $value)
+	{
+		$this->array = array_fill($startIndex, $num, $value);
+		return $this;
+	}
+
+	/**
+	 * filter
+	 */
+	public function filter($callback, $flag = 0)
+	{
+		$this->array = array_filter($this->array, $callback, $flag);
+		return $this;
+	}
+	
+	/**
+	 * flip
+	 */
+	public function flip()
+	{
+		$this->array = array_flip($this->array);
+		return $this;
+	}
+
+	/**
+	 * intersectAssoc
+	 */
+	public function intersectAssoc(...$arrays)
+	{
+		$this->array = call_user_func_array("array_intersect_assoc", $arrays);
+		return $this;
+	}
+
+	/**
+	 * intersectKey
+	 */
+	public function intersectKey(...$arrays)
+	{
+		$this->array = call_user_func_array("array_intersect_key", $arrays);
+		return $this;
+	}
+
+	/**
+	 * intersectUassoc
+	 */
+	public function intersectUassoc($key_compare_func, ...$arrays)
+	{
+		$arrays[] = $key_compare_func;
+		$this->array = call_user_func_array("array_intersect_uassoc", $arrays);
+		return $this;
+	}
+
+	/**
+	 * intersectUassoc
+	 */
+	public function intersectUkey($key_compare_func, ...$arrays)
+	{
+		$arrays[] = $key_compare_func;
+		$this->array = call_user_func_array("array_intersect_ukey", $arrays);
+		return $this;
+	}
+
+	/**
+	 * intersect
+	 */
+	public function intersect(...$arrays)
+	{
+		$this->array = call_user_func_array("array_intersect", $arrays);
+		return $this;
+	}
+
+	/**
+	 * keyExists
+	 */
+	public function keyExists($key)
+	{
+		return array_key_exists($key, $this->array);
+	}
 	/**
 	 * array_map
 	 */
