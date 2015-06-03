@@ -25,6 +25,15 @@ class ArrayTest extends \PHPUnit_Framework_TestCase
 		$this->assertSame([3, 6, 9, 12], $response->get(), 'Something is not going well');
 	}
 
+	/**
+	 * @test
+	 */
+	public function test_array_vivisect()
+	{
+		$response = $this->array->from(["color" => "red", "flavor" => "cherry", "product" => "pepsi", "delivery" => "Stevenson"])->vivisect(["color" => "purple", "flavor" => "grape", "product" => "pepsi", "delivery" => "Stevenson"]);
+		$this->assertSame([['color' => 'red', 'flavor' => 'cherry'], ['product' => 'pepsi', 'delivery' => 'Stevenson'], ['color' => 'purple', 'flavor' => 'grape']], $response->get(), 'Something is not going well');
+	}
+
 	/*
 	 * @test
 	 */
@@ -248,6 +257,89 @@ class ArrayTest extends \PHPUnit_Framework_TestCase
 	{
 		$response = $this->array->from(['brown' => 'green', 'horray'])->keys();
 		$this->assertSame(['brown', 0], $response->get(), 'Something is not going well');
+	}
+
+	/**
+	 * @test
+	 */
+	public function test_array_map()
+	{
+		$response = $this->array->from([1, 2, 3])->map(function($arr1, $arr2) {
+			return $arr1 . ' is ' . $arr2;
+		}, ['pink', 'red', 'orange']);
+		$this->assertSame(['1 is pink', '2 is red', '3 is orange'], $response->get(), 'Something is not going well');
+	}
+
+	/**
+	 * @test
+	 */
+	public function test_array_merge_recursive()
+	{
+		$response = $this->array->from(["color" => ["favorite" => "red"], 5])->mergeRecursive([10, "color" => ["favorite" => "green", "blue"]]);
+		$this->assertSame(['color' => ['favorite' => ['red', 'green'], 'blue'], 5, 10], $response->get(), 'Something is not going well');
+	}
+
+	/**
+	 * @test
+	 */
+	public function test_array_merge()
+	{
+		$response = $this->array->from([1, 2, 3])->merge([3, 4, 'pink']);
+		$this->assertSame([1, 2, 3, 3, 4, 'pink'], $response->get(), 'Something is not going well');
+	}
+
+	/**
+	 * @test
+	 */
+	public function test_array_multisort()
+	{
+//		$response = $this->array->from([1, 2, 3])->multisort([3, 4, 'pink']);
+//		$this->assertSame([1, 2, 3, 3, 4, 'pink'], $response->get(), 'Something is not going well');
+	}
+
+	/**
+	 * @test
+	 */
+	public function test_array_pad()
+	{
+		$response = $this->array->from([12, 10, 9])->pad(5, 0);
+		$this->assertSame([12, 10, 9, 0, 0], $response->get(), 'Something is not going well');
+	}
+
+	/**
+	 * @test
+	 */
+	public function test_array_pop()
+	{
+		$response = $this->array->from(["orange", "banana", "apple", "raspberry"])->pop();
+		$this->assertSame(["orange", "banana", "apple"], $response->get(), 'Something is not going well');
+	}
+
+	/**
+	 * @test
+	 */
+	public function test_array_last()
+	{
+		$response = $this->array->from(["orange", "banana", "apple", "raspberry"])->last();
+		$this->assertSame("raspberry", $response, 'Something is not going well');
+	}
+
+	/**
+	 * @test
+	 */
+	public function test_array_product()
+	{
+		$response = $this->array->from([2, 4, 6, 8])->product();
+		$this->assertSame(384, $response, 'Something is not going well');
+	}
+
+	/**
+	 * @test
+	 */
+	public function test_array_push()
+	{
+		$response = $this->array->from([2, 4, 6, 8])->push(10, 12, 14);
+		$this->assertSame([2, 4, 6, 8, 10, 12, 14], $response->get(), 'Something is not going well');
 	}
 
 	public function tearDown()
